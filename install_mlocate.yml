@@ -8,3 +8,4 @@
       dnf:
         name: mlocate
         state: latest
+      when: ansible_distribution_version == "34" and ansible_distribution in ["Fedora", "RedHat", "CentOS"]
