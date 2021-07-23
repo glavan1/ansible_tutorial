@@ -1,0 +1,10 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+    - name: install mlocate package
+      dnf:
+        name: mlocate
+        state: latest
