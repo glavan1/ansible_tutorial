@@ -1,0 +1,62 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: install updates (Fedora)
+    tags: always,fedora
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "Fedora"
+
+  - name: install updates (Ubuntu)
+    tags: always,ubuntu
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+
+- hosts: demo_servers
+  become: true
+  tasks:
+
+  - name: install apache and php for Ubuntu servers
+    tags: apache,httpd,ubuntu
+    apt:
+      name:
+        - apache2
+        - libapache2-mod-php
+      state: latest
+    when: ansible_distribution == "Ubuntu"
+
+  - name: install apache and php for Fedora servers
+    tags: apache,httpd,fedora
+    dnf:
+      name:
+        - httpd
+        - php
+      state: latest
+    when: ansible_distribution == "Fedora"
+
+- hosts: demo_servers
+  become: true
+  tasks:
+  
+  - name: install mariadb package (Fedora)
+    tags: db_servers,fedora
+    dnf:
+      name:
+        - "community-mysql"
+        - "community-mysql-server"
+      state: latest
+    when: ansible_distribution == "Fedora"
+
+  - name: install mairadb package (Ubuntu)
+    tags: db_servers,ubuntu
+    apt:
+      name: mariadb-server
+      state: latest
+    when: ansible_distribution == "Ubuntu"

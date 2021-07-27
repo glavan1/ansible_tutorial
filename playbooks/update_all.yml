@@ -1,0 +1,12 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+    - name: uapdate all packages
+      package:
+        name: "*"
+        state: latest
+        
+        update_cache: yes

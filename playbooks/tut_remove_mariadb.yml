@@ -1,0 +1,11 @@
+---
+
+- hosts: demo_servers
+  become: true
+  tasks:
+  
+  - name: uninstall mariadb package (Fedora)
+    dnf:
+      name: mariadb-server
+      state: absent
+    when: ansible_distribution == "Fedora"

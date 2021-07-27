@@ -1,0 +1,15 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+    - name: install/update mlocate and 'Web server' group packages
+      package:
+        name: 
+          - "{{ mlocate_package }}"
+          - "@Web Server" 
+          - "*"
+        state: latest
+        
+        update_cache: yes

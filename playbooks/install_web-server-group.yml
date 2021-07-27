@@ -1,0 +1,10 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+    - name: install 'Web Server' package group
+      dnf:
+        name: "@Web Server"
+        state: latest

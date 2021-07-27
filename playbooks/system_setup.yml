@@ -1,0 +1,30 @@
+---
+
+- hosts: server01
+  become: true
+  tasks:
+
+    - name: enable and start https service
+      ansible.builtin.systemd:
+        state: started
+        enabled: yes
+        name: httpd
+
+    - name: open 443/tcp through firewall
+      ansible.posix.firewalld:
+        service: "https"
+        permanent: yes
+        state: enabled
+
+    - name: open 80/tcp through firewall
+      ansible.posix.firewalld:
+        service: "http"
+        permanent: yes
+        state: enabled
+
+    - name: uapdate all packages
+      package:
+        name: "*"
+        state: latest
+        
+        update_cache: yes
