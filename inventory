@@ -3,3 +3,6 @@
 
 [demo_servers]
 server01 mlocate_package=mlocate
+
+[workstations]
+server01 mlocate_package=mlocate
