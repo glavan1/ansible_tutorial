@@ -1,0 +1,4 @@
+- name: add ssh key fopr simone
+  authorized_key:
+    user: simone
+    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGs7EJCXTK/ge+3C65anCNJNMvwQJ3HXDIb6X7gsJKs1 greg default"
