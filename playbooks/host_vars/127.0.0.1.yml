@@ -1,2 +1,4 @@
 ansible_connection: local 
 mlocate_package: mlocate
+ssh_users:  "glavan1 simone"
+ssh_template_file: sshd_config_fedora.j2

@@ -5,3 +5,5 @@ php_package_name: php
 mysql_package_name: community-mysql
 mysql_server_package_name: community-mysql-server
 mysqld_service_name: mysqld
+ssh_users:  "glavan1 simone"
+ssh_template_file: sshd_config_fedora.j2
