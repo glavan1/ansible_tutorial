@@ -1,6 +1,5 @@
-- name: update server
+- name: update main server
   tags: always,fedora
   raw: /usr/bin/dnf -y upgrade
   when: ansible_distribution == "Fedora"
   changed_when: false
-

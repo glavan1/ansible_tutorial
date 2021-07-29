@@ -1,5 +1,5 @@
 [special]
-127.0.0.1 ansible_connection=local mlocate_package=mlocate
+127.0.0.1
 
 [demo_servers]
-server01 mlocate_package=mlocate
+server01

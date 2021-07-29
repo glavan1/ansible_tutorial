@@ -1,0 +1,7 @@
+mlocate_package: mlocate
+apache_package_name: httpd
+apache_service_name: httpd
+php_package_name: php
+mysql_package_name: community-mysql
+mysql_server_package_name: community-mysql-server
+mysqld_service_name: mysqld

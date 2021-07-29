@@ -1,52 +1,32 @@
-- name: install apache and php (Ubuntu)
-  tags: apache,httpd,ubuntu
-  apt:
+- name: install apache and php
+  tags: apache,httpd
+  package:
     name:
-      - apache2
-      - libapache2-mod-php
+      - "{{ apache_package_name }}"
+      - "{{ php_package_name  }}"
     state: latest
-  when: ansible_distribution == "Ubuntu"
 
-- name: install apache and php (Fedora)
-  tags: apache,httpd,fedora
-  dnf:
+- name: install mysqld package
+  tags: db_servers
+  package:
     name:
-      - httpd
-      - php
+      - "{{ mysql_package_name }}"
+      - "{{ mysql_server_package_name }}"
     state: latest
-  when: ansible_distribution == "Fedora"
 
-- name: install mysqld package (Fedora)
-  tags: db_servers,fedora
-  dnf:
-    name:
-      - "community-mysql"
-      - "community-mysql-server"
-    state: latest
-  when: ansible_distribution == "Fedora"
-
-- name: start and enable mysqld (Fedora)
-  tags: mysqld,fedora
+- name: start and enable mysqld
+  tags: db_servers,mysqld
   service:
-    name: mysqld
+    name: "{{ mysqld_service_name }}"
     state: started
     enabled: yes
-  when: ansible_distribution == "Fedora"
 
-- name: start and enable httpdd (Fedora)
-  tags: apache,httpd,fedora
+- name: start and enable httpdd
+  tags: apache,httpd
   service:
-    name: httpd
+    name: "{{ apache_service_name  }}"
     state: started
     enabled: yes
-  when: ansible_distribution == "Fedora"
-
-- name: install mairadb package (Ubuntu)
-  tags: db_servers,ubuntu
-  apt:
-    name: mariadb-server
-    state: latest
-  when: ansible_distribution == "Ubuntu"
 
 - name: change e-mail address for admin
   tags: apache,httpd,fedora
@@ -55,14 +35,7 @@
     regex: '^ServerAdmin'
     line: ServerAdmin root@localhost
   when: ansible_distribution == "Fedora"
-  register: httpd
-
-- name: restart httpd (Fedora)
-  tags: apache,httpd,fedora
-  service:
-    name: httpd
-    state: restarted
-  when: httpd.changed
+  notify: restart_apache
 
 - name: copy default html file for site
   tags: apache,httpd
@@ -86,3 +59,8 @@
     owner: root
     group: root
 
+- name: update server
+  tags: always,fedora
+  raw: /usr/bin/dnf -y upgrade
+  when: ansible_distribution == "Fedora"
+  changed_when: false
